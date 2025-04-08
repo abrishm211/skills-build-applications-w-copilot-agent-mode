@@ -1,28 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 function Leaderboard() {
+  const [leaderboard, setLeaderboard] = useState([]);
+
+  useEffect(() => {
+    fetch('https://jubilant-goldfish-g4rjjprw67r9359p-8000.app.github.dev/api/leaderboard')
+      .then(response => response.json())
+      .then(data => setLeaderboard(data))
+      .catch(error => console.error('Error fetching leaderboard:', error));
+  }, []);
+
   return (
-    <div className="card">
-      <div className="card-header">
-        <h2 className="card-title">Leaderboard</h2>
-      </div>
-      <div className="card-body">
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>Username</th>
-              <th>Score</th>
+    <div className="container mt-4">
+      <h1 className="text-center text-primary">Leaderboard</h1>
+      <table className="table table-striped table-hover">
+        <thead className="table-dark">
+          <tr>
+            <th scope="col">Username</th>
+            <th scope="col">Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          {leaderboard.map(entry => (
+            <tr key={entry.id}>
+              <td>{entry.username}</td>
+              <td>{entry.score}</td>
             </tr>
-          </thead>
-          <tbody>
-            {/* Example data */}
-            <tr>
-              <td>JohnDoe</td>
-              <td>150</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

@@ -1,30 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 function Activities() {
+  const [activities, setActivities] = useState([]);
+
+  useEffect(() => {
+    fetch('https://jubilant-goldfish-g4rjjprw67r9359p-8000.app.github.dev/api/activities')
+      .then(response => response.json())
+      .then(data => setActivities(data))
+      .catch(error => console.error('Error fetching activities:', error));
+  }, []);
+
   return (
-    <div className="card">
-      <div className="card-header">
-        <h2 className="card-title">Activities</h2>
-      </div>
-      <div className="card-body">
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>Activity</th>
-              <th>Duration</th>
-              <th>Date</th>
+    <div className="container mt-4">
+      <h1 className="text-center text-primary">Activities</h1>
+      <table className="table table-striped table-hover">
+        <thead className="table-dark">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Duration</th>
+          </tr>
+        </thead>
+        <tbody>
+          {activities.map(activity => (
+            <tr key={activity.id}>
+              <td>{activity.id}</td>
+              <td>{activity.name}</td>
+              <td>{activity.duration}</td>
             </tr>
-          </thead>
-          <tbody>
-            {/* Example data */}
-            <tr>
-              <td>Running</td>
-              <td>30 mins</td>
-              <td>2025-04-08</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

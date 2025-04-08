@@ -1,28 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 function Workouts() {
+  const [workouts, setWorkouts] = useState([]);
+
+  useEffect(() => {
+    fetch('https://jubilant-goldfish-g4rjjprw67r9359p-8000.app.github.dev/api/workouts')
+      .then(response => response.json())
+      .then(data => setWorkouts(data))
+      .catch(error => console.error('Error fetching workouts:', error));
+  }, []);
+
   return (
-    <div className="card">
-      <div className="card-header">
-        <h2 className="card-title">Workouts</h2>
-      </div>
-      <div className="card-body">
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>Workout Name</th>
-              <th>Description</th>
+    <div className="container mt-4">
+      <h1 className="text-center text-primary">Workouts</h1>
+      <table className="table table-striped table-hover">
+        <thead className="table-dark">
+          <tr>
+            <th scope="col">Workout Name</th>
+            <th scope="col">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {workouts.map(workout => (
+            <tr key={workout.id}>
+              <td>{workout.name}</td>
+              <td>{workout.description}</td>
             </tr>
-          </thead>
-          <tbody>
-            {/* Example data */}
-            <tr>
-              <td>Running</td>
-              <td>Morning run in the park</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
