@@ -4,7 +4,7 @@ function Activities() {
   const [activities, setActivities] = useState([]);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/activities`)
+    fetch(`${process.env.REACT_APP_API_URL}/api/activities${process.env.REACT_APP_CODESPACE_SUFFIX}`)
       .then(response => response.json())
       .then(data => setActivities(data))
       .catch(error => console.error('Error fetching activities:', error));
