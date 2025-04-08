@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import status
 from .models import User, Team, Activity, Leaderboard, Workout
 from .serializers import UserSerializer, TeamSerializer, ActivitySerializer, LeaderboardSerializer, WorkoutSerializer
 
@@ -24,12 +25,16 @@ class WorkoutViewSet(viewsets.ModelViewSet):
     queryset = Workout.objects.all()
     serializer_class = WorkoutSerializer
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def api_root(request, format=None):
+    if request.method == 'POST':
+        return Response({"message": "POST request received"}, status=status.HTTP_201_CREATED)
+
+    base_url = 'https://jubilant-goldfish-g4rjjprw67r9359p-8000.app.github.dev/'
     return Response({
-        'users': 'users/',
-        'teams': 'teams/',
-        'activity': 'activity/',
-        'leaderboard': 'leaderboard/',
-        'workouts': 'workouts/',
+        'users': base_url + 'api/users/?format=api',
+        'teams': base_url + 'api/teams/?format=api',
+        'activities': base_url + 'api/activities/?format=api',
+        'leaderboard': base_url + 'api/leaderboard/?format=api',
+        'workouts': base_url + 'api/workouts/?format=api'
     })

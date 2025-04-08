@@ -32,4 +32,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include(router.urls)),
     path('api-root/', views.api_root, name='api-root'),
+    path('api/', views.api_root, name='api-root'),
 ]
