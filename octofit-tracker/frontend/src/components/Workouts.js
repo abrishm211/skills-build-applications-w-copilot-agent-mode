@@ -4,7 +4,7 @@ function Workouts() {
   const [workouts, setWorkouts] = useState([]);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/workouts${process.env.REACT_APP_CODESPACE_SUFFIX}`)
+    fetch('https://congenial-robot-pwrx4jxpp9c6vjv-8000.app.github.dev/api/workouts/')
       .then(response => response.json())
       .then(data => setWorkouts(data))
       .catch(error => console.error('Error fetching workouts:', error));

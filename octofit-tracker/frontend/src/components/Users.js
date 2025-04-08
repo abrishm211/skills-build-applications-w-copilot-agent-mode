@@ -4,7 +4,7 @@ function Users() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/users${process.env.REACT_APP_CODESPACE_SUFFIX}`)
+    fetch('https://congenial-robot-pwrx4jxpp9c6vjv-8000.app.github.dev/api/users/')
       .then(response => response.json())
       .then(data => setUsers(data))
       .catch(error => console.error('Error fetching users:', error));
